@@ -1,0 +1,27 @@
+package sweeper;
+
+class Matrix {
+    private Box[][] matrix;
+
+    public Matrix(Box box) {
+        this.matrix = new Box[Ranges.getSize().x][Ranges.getSize().y];
+        for (Coord coord : Ranges.getAllCords()) {
+            matrix[coord.x][coord.y] = box;
+        }
+    }
+
+    Box get(Coord coord) {
+        if (Ranges.inRange(coord)) {
+            return matrix[coord.x][coord.y];
+        } else {
+            return null;
+        }
+
+    }
+
+    void set(Coord coord, Box box) {
+        if (Ranges.inRange(coord)) {
+            matrix[coord.x][coord.y] = box;
+        }
+    }
+}
