@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,7 @@ import sweeper.Ranges;
 
 public class JavaSweeper extends JFrame {
     private JPanel panel;
+    private JLabel label;
 
     private final int COLS = 9;
     private final int ROWS = 9;
@@ -26,7 +28,15 @@ public class JavaSweeper extends JFrame {
         game.start();
         setImages();
         initPanel();
+        initLabel();
         initFrame();
+    }
+
+    private void initLabel() {
+        label = new JLabel("Welcome!");
+        label.setFont(new Font("Tahoma", Font.BOLD, 20));
+        add(label, BorderLayout.SOUTH);
+
     }
 
     private void initPanel() {
