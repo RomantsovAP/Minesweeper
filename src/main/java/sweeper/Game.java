@@ -2,21 +2,37 @@ package sweeper;
 
 public class Game {
 
-    Matrix bombMap;
+    private Bomb bomb;
+    private Flag flag;
 
-    public Game(int cols, int rows) {
+    public Game(int cols, int rows, int bombs) {
         Ranges.setSize(new Coord(cols, rows));
+        bomb = new Bomb(bombs);
+        flag = new Flag();
     }
 
     public void start() {
-        bombMap = new Matrix(Box.ZERO);
-        bombMap.set(new Coord(0,0), Box.BOMB);
-        bombMap.set(new Coord(1,0), Box.NUM1);
-        bombMap.set(new Coord(0,1), Box.NUM1);
-        bombMap.set(new Coord(1,1), Box.NUM1);
+        bomb.start();
+        flag.start();
     }
 
+
     public Box getBox(Coord coord) {
-        return bombMap.get(coord);
+        Box result;
+        if (Box.OPENED == flag.get(coord)) {
+            result = bomb.get(coord);
+        } else {
+            result = flag.get(coord);
+        }
+        return result;
     }
+
+    public void pressLeftButton(Coord coord) {
+        flag.setOpenedToBox(coord);
+    }
+
+    public void pressRightButton(Coord coord) {
+        flag.setFlaggedToBox(coord);
+    }
+
 }
