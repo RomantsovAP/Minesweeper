@@ -4,6 +4,11 @@ public class Game {
 
     private Bomb bomb;
     private Flag flag;
+    private GameState state;
+
+    public GameState getState() {
+        return state;
+    }
 
     public Game(int cols, int rows, int bombs) {
         Ranges.setSize(new Coord(cols, rows));
@@ -12,6 +17,7 @@ public class Game {
     }
 
     public void start() {
+        state = GameState.PLAYED;
         bomb.start();
         flag.start();
     }
