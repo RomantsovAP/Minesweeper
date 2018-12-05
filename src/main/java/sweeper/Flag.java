@@ -45,8 +45,14 @@ class Flag {
 
     }
 
-    int getCountOfFlagedBoxesAround() {
-        return 0;
+    int getCountOfFlagedBoxesAround(Coord coord) {
+        int count = 0;
+        for (Coord currentCoord : Ranges.getCoordsAround(coord)) {
+            if (Box.FLAGED == flagMap.get(currentCoord)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     int getTotalFlaged() {

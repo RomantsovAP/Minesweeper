@@ -24,4 +24,12 @@ public enum Box {
     Box nextNumberBox() {
         return Box.values()[this.ordinal() + 1];
     }
+
+    int getNumber() {
+        int nr = ordinal();
+        if (nr < Box.NUM1.ordinal() || nr > Box.NUM8.ordinal()){
+            nr = -1;
+        }
+        return nr;
+    }
 }
