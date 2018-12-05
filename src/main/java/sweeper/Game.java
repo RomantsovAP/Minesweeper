@@ -35,7 +35,18 @@ public class Game {
 
     public void pressLeftButton(Coord coord) {
         openBox(coord);
+        checkWinner();
     }
+
+    private void checkWinner() {
+        if(GameState.PLAYED == state) {
+            if (flag.getTotalClosed() ==  bomb.getTotalBombs()) {
+                state = GameState.WINNER;
+                flag.setFlagedToLastClosedBoxes();
+            }
+        }
+    }
+
 
     private void openBox(Coord coord) {
         switch (flag.get(coord)) {
@@ -43,7 +54,7 @@ public class Game {
             case FLAGED: break;
             case CLOSED:
                 switch (bomb.get(coord)) {
-                    case ZERO: break;
+                    case ZERO: openBoxesAroundZero(coord); break;
                     case BOMB: break;
                     default: flag.setOpenedToBox(coord);
 
@@ -51,8 +62,23 @@ public class Game {
         }
     }
 
+    private void openBoxesAroundZero(Coord coord) {
+        flag.setOpenedToBox(coord);
+        for (Coord currnetCoord : Ranges.getCoordsAround(coord)) {
+            openBox(currnetCoord);
+        }
+    }
+
     public void pressRightButton(Coord coord) {
         flag.toggleFlagedToBox(coord);
+    }
+
+    public int getTotalBombs() {
+        return bomb.getTotalBombs();
+    }
+
+    public int getTotalFlaged() {
+        return flag.getTotalFlaged();
     }
 
 }

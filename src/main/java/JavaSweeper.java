@@ -34,7 +34,7 @@ public class JavaSweeper extends JFrame {
 
     private void initLabel() {
         label = new JLabel(getMessage());
-        label.setFont(new Font("Tahoma", Font.BOLD, 20));
+        label.setFont(new Font("Tahoma", Font.BOLD, 18));
         add(label, BorderLayout.SOUTH);
 
     }
@@ -105,7 +105,13 @@ public class JavaSweeper extends JFrame {
         switch (game.getState()){
              case BOMBED: result = "Ba-Da-Bum!!! You Lose!"; break;
              case WINNER: result = "Congratulations!"; break;
-             case PLAYED: result = "Welcome!"; break;
+             case PLAYED:
+                 default: if (game.getTotalFlaged() == 0) {
+                                result = "Welcome!";
+                            } else {
+                                result = "Think twice! Flagged " + game.getTotalFlaged() + " of " + game.getTotalBombs() + " bombs.";
+                            }
+                 break;
          }
          return result;
     }
