@@ -34,8 +34,10 @@ public class Game {
     }
 
     public void pressLeftButton(Coord coord) {
-        openBox(coord);
-        checkWinner();
+        if (!isGameOver()) {
+            openBox(coord);
+            checkWinner();
+        }
     }
 
     private void checkWinner() {
@@ -55,11 +57,24 @@ public class Game {
             case CLOSED:
                 switch (bomb.get(coord)) {
                     case ZERO: openBoxesAroundZero(coord); break;
-                    case BOMB: break;
+                    case BOMB: openBombs(coord); break;
                     default: flag.setOpenedToBox(coord);
 
                 }
         }
+    }
+
+    private void openBombs(Coord bombedCoord) {
+        flag.setBombedToBox(bombedCoord);
+        for (Coord coord : Ranges.getAllCords()) {
+            if (Box.BOMB == bomb.get(coord)) {
+                flag.setOpenedToClosedBox(coord);
+            } else {
+                flag.setNoBombToFlagedBox(coord);
+            }
+        }
+
+        state = GameState.BOMBED;
     }
 
     private void openBoxesAroundZero(Coord coord) {
@@ -70,7 +85,19 @@ public class Game {
     }
 
     public void pressRightButton(Coord coord) {
-        flag.toggleFlagedToBox(coord);
+        if (!isGameOver()) {
+            flag.toggleFlagedToBox(coord);
+        }
+    }
+
+    private boolean isGameOver() {
+        if (GameState.PLAYED != state) {
+            start();
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public int getTotalBombs() {

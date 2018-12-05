@@ -69,4 +69,16 @@ class Flag {
             }
         }
     }
+
+    void setOpenedToClosedBox(Coord coord) {
+        if (Box.CLOSED == flagMap.get(coord)){
+            setOpenedToBox(coord);
+        }
+    }
+
+    void setNoBombToFlagedBox(Coord coord) {
+        if (Box.FLAGED == flagMap.get(coord)) {
+            flagMap.set(coord, Box.NOBOMB);
+        }
+    }
 }
